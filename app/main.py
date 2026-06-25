@@ -81,7 +81,7 @@ def get_profile (current_user =Depends(get_current_user)):
     
 
     return current_user
-@app.post("/posts",response_model=UserResponse)
+@app.post("/posts",response_model=PostResponse)
 def Post_Create(post:PostCreate,current_user= Depends(get_current_user),db:Session =Depends(get_db)):
     #db:Session =Depends(get_db)
     new_post= Post(title=post.title,
