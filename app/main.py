@@ -5,7 +5,7 @@ from sqlalchemy.orm import Session
 from .schemas import UserCreate, UserResponse,UserLogin,PostCreate,UserResponse,PostUpdate,PostResponse
 from .utils import verify_password,hash_password
 from .auth import create_access_token,get_current_user
-
+from fastapi.security import OAuth2PasswordRequestForm
 
 app =FastAPI()
 Base.metadata.create_all(bind=engine)
@@ -56,8 +56,8 @@ def user_delete(id:int,db:Session = Depends(get_db)):
     return {"message":"user deleted successfully"}
 
 @app.post("/login")
-def login(login_data:UserLogin,db:Session = Depends(get_db)):
-    user = db.query(User).filter(User.email == login_data.email).first()
+def login(login_data:OAuth2PasswordRequestForm = Depends(),db:Session = Depends(get_db)):
+    user = db.query(User).filter(User.email == login_data.username).first()
 
     if user is None :
         raise HTTPException(status_code = 401,detail="invalid credentials")
