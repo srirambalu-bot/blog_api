@@ -8,7 +8,7 @@ from .auth import create_access_token,get_current_user
 from fastapi.security import OAuth2PasswordRequestForm
 
 app =FastAPI()
-Base.metadata.create_all(bind=engine)
+
 
 @app.get("/")
 def root():

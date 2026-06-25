@@ -5,11 +5,18 @@ from fastapi.security import OAuth2PasswordBearer
 from sqlalchemy.orm import Session
 from .database import get_db
 from .model import User
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 
-SECRET_KEY = "mysecretkey"
-ALGORITHM = "HS256"
-ACCESS_TOKEN_EXPIRE_MINUTES = 30
+
+
+
+SECRET_KEY =  os.getenv("SECRET_KEY")
+ALGORITHM = os.getenv("ALGORITHM")
+ACCESS_TOKEN_EXPIRE_MINUTES = int(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES"))
 
 def create_access_token(data:dict):
     expire = datetime.utcnow()+ timedelta(minutes =ACCESS_TOKEN_EXPIRE_MINUTES)
